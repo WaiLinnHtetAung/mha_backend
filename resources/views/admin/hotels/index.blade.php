@@ -3,13 +3,13 @@
 
 <div class="card">
     <div class="custom-header">
-        {{ trans('cruds.zone.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.hotel.title_singular') }} {{ trans('global.list') }}
 
-        @can('zone_create')
+        @can('hotel_create')
             <div style="margin-bottom: 10px;" class="row">
                 <div class="col-lg-12">
-                    <a class="btn success-btn" href="{{ route('admin.zones.create') }}">
-                        {{ trans('global.add') }} {{ trans('cruds.zone.title_singular') }}
+                    <a class="btn success-btn" href="{{ route('admin.hotels.create') }}">
+                        {{ trans('global.add') }} {{ trans('cruds.hotel.title_singular') }}
                     </a>
                 </div>
             </div>
@@ -22,10 +22,22 @@
                 <thead>
                     <tr>
                         <th>
-                            {{ trans('cruds.zone.fields.id') }}
+                            {{ trans('cruds.hotel.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.zone.fields.name') }}
+                            {{ trans('cruds.hotel.fields.name') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.hotel.fields.owner') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.hotel.fields.image') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.hotel.fields.sr_no') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.hotel.fields.phone') }}
                         </th>
                         <th>
                             &nbsp;
@@ -33,35 +45,47 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($zones as $key => $zone)
-                        <tr data-entry-id="{{ $zone->id }}">
+                    @foreach($hotels as $key => $hotel)
+                        <tr data-entry-id="{{ $hotel->id }}">
 
                             <td>
-                                {{ $zone->id }}
+                                {{ $hotel->id }}
                             </td>
                             <td>
-                                {{ $zone->name ?? '' }}
+                                {{ $hotel->name ?? '' }}
                             </td>
                             <td>
-                                @can('zone_show')
+                                {{ $hotel->owner ?? '' }}
+                            </td>
+                            <td>
+                                <img style="width: 100%; height: 100px; object-fit: contain;" src="{{ asset('storage/images/'.$hotel->image) }}" alt="">
+                            </td>
+                            <td>
+                                {{ $hotel->sr_no ?? '' }}
+                            </td>
+                            <td>
+                                {{ $hotel->phone ?? '' }}
+                            </td>
+                            <td>
+                                @can('hotel_show')
                                     <a class="p-0 glow"
                                         style="width: 26px;height: 36px;display: inline-block;line-height: 36px;color:grey;"
-                                        href="{{ route('admin.zones.show', $zone->id) }}">
+                                        href="{{ route('admin.hotels.show', $hotel->id) }}">
                                         <i class='bx bx-show'></i>
                                     </a>
                                 @endcan
 
-                                @can('zone_edit')
+                                @can('hotel_edit')
                                     <a class="p-0 glow"
                                         style="width: 26px;height: 36px;display: inline-block;line-height: 36px;color:grey;"
-                                        href="{{ route('admin.zones.edit', $zone->id) }}">
+                                        href="{{ route('admin.hotels.edit', $hotel->id) }}">
                                         <i class='bx bx-edit'></i>
                                     </a>
                                 @endcan
 
-                                @can('zone_delete')
-                                    <form id="orderDelete-{{ $zone->id }}"
-                                        action="{{ route('admin.zones.destroy', $zone->id) }}" method="POST"
+                                @can('hotel_delete')
+                                    <form id="orderDelete-{{ $hotel->id }}"
+                                        action="{{ route('admin.hotels.destroy', $hotel->id) }}" method="POST"
                                         style="display: inline-block;" onsubmit="return showConfirmation()">
                                         @csrf
                                         @method('delete')

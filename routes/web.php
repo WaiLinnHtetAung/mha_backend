@@ -30,6 +30,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //Sub Zones
     Route::resource('sub_zones', 'SubZonesController');
+
+    //Hotels
+    Route::resource('hotels', 'HotelsController');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

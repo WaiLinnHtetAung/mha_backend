@@ -87,7 +87,17 @@ return [
         'title_singular'    => 'Hotel',
         'fields'            => [
             'id'                    => 'ID',
-            'name'                  => 'Name',
+            'name'                  => 'Hotel Name',
+            'owner'                 => 'Owner Name',
+            'image'                 => 'Hotel Image',
+            'sr_no'                 => 'Sr No',
+            'total_room'            => 'Total Room',
+            'phone'                 => 'Phone Number',
+            'email'                 => 'Email',
+            'address'               => 'Address',
+            'web_link'              => 'Website Link',
+            'sub_zone_name'         => 'Sub Zone Name',
+            'zone_name'             => 'Zone Name'
         ],
     ],
 

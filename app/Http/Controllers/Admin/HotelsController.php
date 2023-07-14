@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Zone;
 use App\Models\Hotel;
+use App\Models\SubZone;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreHotelsRequest;
 
 class HotelsController extends Controller
 {
@@ -15,7 +18,11 @@ class HotelsController extends Controller
      */
     public function index()
     {
-        //
+        $hotels = Hotel::with('sub_zone', 'zone')->get();
+
+        // return $hotels;
+
+        return view('admin.hotels.index', compact('hotels'));
     }
 
     /**
@@ -25,7 +32,10 @@ class HotelsController extends Controller
      */
     public function create()
     {
-        //
+        $zones = Zone::pluck('name', 'id');
+        $sub_zones = SubZone::pluck('name', 'id');
+
+        return view('admin.hotels.create', compact('zones', 'sub_zones'));
     }
 
     /**
@@ -34,9 +44,16 @@ class HotelsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreHotelsRequest $request)
     {
-        //
+        $hotel = Hotel::create($request->all());
+
+        $fileName = uniqid().$request->file('image')->getClientOriginalName();
+        $request->file('image')->storeAs('public/images', $fileName);
+
+        $hotel->update(['image' => $fileName]);
+
+        return redirect()->route('admin.hotels.index');
     }
 
     /**
