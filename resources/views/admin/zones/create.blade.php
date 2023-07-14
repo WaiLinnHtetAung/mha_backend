@@ -12,7 +12,7 @@
             <div class="row my-3">
                 <div class="form-group col-lg-4 col-md-6 col-sm-12">
                     <label for="">{{ trans('cruds.zone.fields.name') }}</label>
-                    <input type="text" class="form-control" name="name">
+                    <input type="text" class="form-control" name="name" value="{{old('name')}}">
                     @error('name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror

@@ -75,7 +75,7 @@
         {{-- -- hotel management --  --}}
         @can('hotel_management_access')
             <li
-                class="menu-item  {{ request()->is('admin/zones*') ? 'active open' : '' }} {{ request()->is('admin/roles*') ? 'active open' : '' }} {{ request()->is('admin/users*') ? 'active open' : '' }} {{ request()->is('admin/audit-logs*') ? 'active open' : '' }}">
+                class="menu-item  {{ request()->is('admin/zones*') ? 'active open' : '' }} {{ request()->is('admin/sub_zones*') ? 'active open' : '' }} {{ request()->is('admin/users*') ? 'active open' : '' }} {{ request()->is('admin/audit-logs*') ? 'active open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class='menu-icon tf-icons bx bxs-building-house'></i>
                     <div data-i18n="Dashboards">Hotel management</div>
@@ -91,8 +91,8 @@
                     @endcan
                     @can('sub_zone_access')
                         <li
-                            class="menu-item {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.roles.index') }}" class="menu-link">
+                            class="menu-item {{ request()->is('admin/sub_zones') || request()->is('admin/sub_zones/*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.sub_zones.index') }}" class="menu-link">
                                 {{ trans('cruds.sub_zone.title') }}
                             </a>
                         </li>

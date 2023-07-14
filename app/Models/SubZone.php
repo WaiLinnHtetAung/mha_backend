@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Zone;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SubZone extends Model
 {
@@ -12,4 +13,8 @@ class SubZone extends Model
     protected $fillable = [
         'name', 'zone_id'
     ];
+
+    public function zone() {
+        return $this->belongsTo(Zone::class, 'zone_id');
+    }
 }

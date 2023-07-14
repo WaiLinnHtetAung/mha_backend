@@ -74,11 +74,12 @@ return [
         ],
     ],
     'sub_zone' => [
-        'title'             => 'Sub_Zones',
-        'title_singular'    => 'Sub_Zone',
+        'title'             => 'Sub Zones',
+        'title_singular'    => 'Sub Zone',
         'fields'            => [
             'id'                    => 'ID',
             'name'                  => 'Name',
+            'zone_name'             => 'Zone Name'
         ],
     ],
     'hotel' => [

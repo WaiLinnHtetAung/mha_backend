@@ -3,13 +3,13 @@
 
 <div class="card">
     <div class="custom-header">
-        {{ trans('cruds.zone.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.sub_zone.title_singular') }} {{ trans('global.list') }}
 
-        @can('zone_create')
+        @can('sub_zone_create')
             <div style="margin-bottom: 10px;" class="row">
                 <div class="col-lg-12">
-                    <a class="btn success-btn" href="{{ route('admin.zones.create') }}">
-                        {{ trans('global.add') }} {{ trans('cruds.zone.title_singular') }}
+                    <a class="btn success-btn" href="{{ route('admin.sub_zones.create') }}">
+                        {{ trans('global.add') }} {{ trans('cruds.sub_zone.title_singular') }}
                     </a>
                 </div>
             </div>
@@ -22,10 +22,13 @@
                 <thead>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.id') }}
+                            {{ trans('cruds.sub_zone.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.name') }}
+                            {{ trans('cruds.sub_zone.fields.name') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.sub_zone.fields.zone_name') }}
                         </th>
                         <th>
                             &nbsp;
@@ -33,35 +36,38 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($zones as $key => $zone)
-                        <tr data-entry-id="{{ $zone->id }}">
+                    @foreach($subZones as $key => $sub_zone)
+                        <tr data-entry-id="{{ $sub_zone->id }}">
 
                             <td>
-                                {{ $zone->id }}
+                                {{ $sub_zone->id }}
                             </td>
                             <td>
-                                {{ $zone->name ?? '' }}
+                                {{ $sub_zone->name ?? '' }}
                             </td>
                             <td>
-                                @can('zone_show')
+                                {{ $sub_zone->zone->name ?? '' }}
+                            </td>
+                            <td>
+                                @can('sub_zone_show')
                                     <a class="p-0 glow"
                                         style="width: 26px;height: 36px;display: inline-block;line-height: 36px;color:grey;"
-                                        href="{{ route('admin.zones.show', $zone->id) }}">
+                                        href="{{ route('admin.sub_zones.show', $sub_zone->id) }}">
                                         <i class='bx bx-show'></i>
                                     </a>
                                 @endcan
 
-                                @can('zone_edit')
+                                @can('sub_zone_edit')
                                     <a class="p-0 glow"
                                         style="width: 26px;height: 36px;display: inline-block;line-height: 36px;color:grey;"
-                                        href="{{ route('admin.zones.edit', $zone->id) }}">
+                                        href="{{ route('admin.sub_zones.edit', $sub_zone->id) }}">
                                         <i class='bx bx-edit'></i>
                                     </a>
                                 @endcan
 
-                                @can('zone_delete')
-                                    <form id="orderDelete-{{ $zone->id }}"
-                                        action="{{ route('admin.zones.destroy', $zone->id) }}" method="POST"
+                                @can('sub_zone_delete')
+                                    <form id="orderDelete-{{ $sub_zone->id }}"
+                                        action="{{ route('admin.sub_zones.destroy', $sub_zone->id) }}" method="POST"
                                         style="display: inline-block;" onsubmit="return showConfirmation()">
                                         @csrf
                                         @method('delete')

@@ -12,4 +12,8 @@ class Zone extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function sub_zone() {
+        return $this->hasMany(SubZone::class);
+    }
 }

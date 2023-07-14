@@ -1,4 +1,5 @@
 /* layout */
+
 .content-wrapper {
     justify-content: start !important;
     overflow: hidden !important;
@@ -8,7 +9,7 @@
     padding-top: 1rem !important;
 }
 
-.price-right{
+.price-right {
     text-align: right;
 }
 
@@ -17,14 +18,15 @@
     display: none !important;
 }
 
-.fc-daygrid-event-harness,.fc-timegrid-event-harness-inset .fc-timegrid-event{
+.fc-daygrid-event-harness,
+.fc-timegrid-event-harness-inset .fc-timegrid-event {
     border-left: 3px solid #5a8dee;
     background-color: #e5edfc !important;
     color: #5a8dee !important;
     border-radius: 0.25rem;
 }
 
-.custom-header{
+.custom-header {
     display: flex !important;
     justify-content: space-between !important;
     padding: 10px 15px 0px 15px !important;
@@ -40,16 +42,31 @@
     padding: 10px;
 }
 
-
 .bg-blur {
-    position: fixed; /* Sit on top of the page content */
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
+    position: fixed;
+    /* Sit on top of the page content */
+    width: 100%;
+    /* Full width (cover the whole page) */
+    height: 100%;
+    /* Full height (cover the whole page) */
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-    z-index: 1000; /* Specify a stack order in case you're using a different order for other elements */
-    cursor: pointer; /* Add a pointer on hover */
-  }
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Black background with opacity */
+    z-index: 1000;
+    /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer;
+    /* Add a pointer on hover */
+}
+
+.success-btn {
+    background-color: green;
+    color: #fff;
+}
+
+.success-btn:hover {
+    color: #fff;
+    font-weight: bold;
+}

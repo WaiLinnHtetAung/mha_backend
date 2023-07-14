@@ -75,7 +75,7 @@ class ZonesController extends Controller
      */
     public function update(UpdateZoneRequest $request, Zone $zone)
     {
-        Zone::find($zone->id)->update($request->all());
+        $zone->update($request->all());
 
         return redirect()->route('admin.zones.index');
     }

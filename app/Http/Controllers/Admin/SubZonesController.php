@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Zone;
 use App\Models\SubZone;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreSubZoneRequest;
+use App\Http\Requests\UpdateSubZoneRequest;
 
 class SubZonesController extends Controller
 {
@@ -15,7 +18,9 @@ class SubZonesController extends Controller
      */
     public function index()
     {
-        //
+        $subZones = SubZone::with('zone')->get();
+
+        return view('admin.subzones.index', compact('subZones'));
     }
 
     /**
@@ -25,7 +30,9 @@ class SubZonesController extends Controller
      */
     public function create()
     {
-        //
+        $zones = Zone::pluck('name', 'id');
+
+        return view('admin.subzones.create', compact('zones'));
     }
 
     /**
@@ -34,9 +41,11 @@ class SubZonesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSubZoneRequest $request)
     {
-        //
+        SubZone::create($request->all());
+
+        return redirect()->route('admin.sub_zones.index');
     }
 
     /**
@@ -47,7 +56,8 @@ class SubZonesController extends Controller
      */
     public function show(SubZone $subZone)
     {
-        //
+        $sub_zone = $subZone->load('zone');
+        return view('admin.subzones.show', compact('sub_zone'));
     }
 
     /**
@@ -58,7 +68,10 @@ class SubZonesController extends Controller
      */
     public function edit(SubZone $subZone)
     {
-        //
+        $sub_zone = $subZone->load('zone');
+        $zones = Zone::pluck('name', 'id');
+
+        return view('admin.subzones.edit', compact('sub_zone', 'zones'));
     }
 
     /**
@@ -68,9 +81,11 @@ class SubZonesController extends Controller
      * @param  \App\Models\SubZone  $subZone
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SubZone $subZone)
+    public function update(UpdateSubZoneRequest $request, SubZone $subZone)
     {
-        //
+        $subZone->update($request->all());
+
+        return redirect()->route('admin.sub_zones.index');
     }
 
     /**
@@ -81,6 +96,8 @@ class SubZonesController extends Controller
      */
     public function destroy(SubZone $subZone)
     {
-        //
+        $subZone->delete();
+
+        return redirect()->route('admin.sub_zones.index');
     }
 }
