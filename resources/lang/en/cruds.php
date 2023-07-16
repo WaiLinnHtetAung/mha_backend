@@ -83,7 +83,7 @@ return [
         ],
     ],
     'hotel' => [
-        'title'             => 'Hotels',
+        'title'             => 'All Hotels',
         'title_singular'    => 'Hotel',
         'fields'            => [
             'id'                    => 'ID',

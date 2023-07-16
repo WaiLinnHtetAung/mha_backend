@@ -3,7 +3,14 @@
 
 <div class="card">
     <div class="custom-header">
-        {{ trans('cruds.hotel.title_singular') }} {{ trans('global.list') }}
+        {{-- <span style="color: #eb9c00; font-weight:bold;">{{ isset($zoneName) ? $zoneName.' Hotels' : trans('cruds.hotel.title') }} {{ trans('global.list') }} </span> --}}
+        @if(isset($zoneName))
+            <div><span style="color: #eb9c00; font-weight:bold; font-size: 17px;">{{$zoneName}}</span> Hotels List</div>
+        @else
+            <div><span style="color: #eb9c00; font-weight:bold; font-size: 17px;">All</span> Hotels List</div>
+        @endif
+
+        <div style="font-weight: bold; color: rgb(21, 94, 190);">Total - {{count($hotels)}}</div>
 
         @can('hotel_create')
             <div style="margin-bottom: 10px;" class="row">
@@ -18,7 +25,7 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-User">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Hotel">
                 <thead>
                     <tr>
                         <th>
@@ -58,7 +65,12 @@
                                 {{ $hotel->owner ?? '' }}
                             </td>
                             <td>
-                                <img style="width: 100%; height: 100px; object-fit: contain;" src="{{ asset('storage/images/'.$hotel->image) }}" alt="">
+                                @if(isset($hotel->image))
+                                    <img style="width: 100%; height: 100px; object-fit: contain;" src="{{ asset('storage/images/'.$hotel->image) }}" alt="">
+
+                                @else
+                                    <img style="width: 100%; height: 100px; object-fit: contain;" src="{{asset('storage/default.jpg')}}" alt="">
+                                @endif
                             </td>
                             <td>
                                 {{ $hotel->sr_no ?? '' }}
@@ -66,7 +78,7 @@
                             <td>
                                 {{ $hotel->phone ?? '' }}
                             </td>
-                            <td>
+                            <td class="text-nowrap">
                                 @can('hotel_show')
                                     <a class="p-0 glow"
                                         style="width: 26px;height: 36px;display: inline-block;line-height: 36px;color:grey;"
@@ -119,5 +131,28 @@
         return false;
     }
 }
+</script>
+@endsection
+
+@section('scripts')
+@parent
+<script>
+    $(function () {
+  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+
+
+  $.extend(true, $.fn.dataTable.defaults, {
+    orderCellsTop: true,
+    order: [[ 1, 'desc' ]],
+    pageLength: 100,
+  });
+  let table = $('.datatable-Hotel:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+      $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
+  });
+
+})
+
 </script>
 @endsection

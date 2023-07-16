@@ -7,7 +7,9 @@ use App\Models\Hotel;
 use App\Models\SubZone;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreHotelsRequest;
+use App\Http\Requests\UpdateHotelsRequest;
 
 class HotelsController extends Controller
 {
@@ -20,9 +22,17 @@ class HotelsController extends Controller
     {
         $hotels = Hotel::with('sub_zone', 'zone')->get();
 
-        // return $hotels;
-
         return view('admin.hotels.index', compact('hotels'));
+    }
+
+    public function hotelsByZone($zone) {
+        $zoneName = $zone;
+
+        $zone_id = Zone::firstWhere('name', $zoneName)->id;
+
+        $hotels = Hotel::where('zone_id', $zone_id)->get();
+
+        return view('admin.hotels.index', compact('hotels', 'zoneName'));
     }
 
     /**
@@ -48,12 +58,16 @@ class HotelsController extends Controller
     {
         $hotel = Hotel::create($request->all());
 
-        $fileName = uniqid().$request->file('image')->getClientOriginalName();
-        $request->file('image')->storeAs('public/images', $fileName);
+        if($request->hasFile('image')) {
+            $fileName = uniqid().$request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('public/images', $fileName);
 
-        $hotel->update(['image' => $fileName]);
+            $hotel->update(['image' => $fileName]);
+        }
 
-        return redirect()->route('admin.hotels.index');
+        $zoneName = Zone::find($request->zone_id)->name;
+
+        return redirect()->route('admin.hotels.byzone', ['zone' => $zoneName]);
     }
 
     /**
@@ -64,7 +78,8 @@ class HotelsController extends Controller
      */
     public function show(Hotel $hotel)
     {
-        //
+        $hotel = $hotel->load('zone', 'sub_zone');
+        return view('admin.hotels.show', compact('hotel'));
     }
 
     /**
@@ -75,7 +90,11 @@ class HotelsController extends Controller
      */
     public function edit(Hotel $hotel)
     {
-        //
+        $hotel = $hotel->load('zone', 'sub_zone');
+        $zones = Zone::pluck('name', 'id');
+        $sub_zones = SubZone::pluck('name', 'id');
+
+        return view('admin.hotels.edit', compact('hotel', 'zones', 'sub_zones'));
     }
 
     /**
@@ -85,9 +104,25 @@ class HotelsController extends Controller
      * @param  \App\Models\Hotel  $hotel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Hotel $hotel)
+    public function update(UpdateHotelsRequest $request, Hotel $hotel)
     {
-        //
+
+        $fileName = $hotel->image;
+        if($request->hasFile('image')) {
+            if($fileName) {
+                Storage::disk('public')->delete('images/'.$fileName);
+            }
+
+            $newFileName = uniqid().$request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('public/images', $newFileName);
+        }
+
+        $hotel->update($request->all());
+        $hotel->update(['image' => $request->hasFile('image') ? $newFileName : $fileName]);
+
+        return redirect()->route('admin.hotels.index');
+
+
     }
 
     /**

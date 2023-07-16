@@ -142,6 +142,10 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 33,
                 'title' => 'sub_zone_access',
             ],
+            [
+                'id'    => 34,
+                'title' => 'zone_management_access'
+            ]
         ];
 
         Permission::insert($permissions);

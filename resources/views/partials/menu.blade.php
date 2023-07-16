@@ -72,13 +72,13 @@
             </li>
         @endcan
 
-        {{-- -- hotel management --  --}}
-        @can('hotel_management_access')
+        {{-- -- zone management --  --}}
+        @can('zone_management_access')
             <li
                 class="menu-item  {{ request()->is('admin/zones*') ? 'active open' : '' }} {{ request()->is('admin/sub_zones*') ? 'active open' : '' }} {{ request()->is('admin/hotels*') ? 'active open' : '' }} ">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class='menu-icon tf-icons bx bxs-building-house'></i>
-                    <div data-i18n="Dashboards">Hotel management</div>
+                    <i class='menu-icon tf-icons bx bxs-pie-chart-alt-2'></i>
+                    <div data-i18n="Dashboards">Zones management</div>
                 </a>
                 <ul class="menu-sub">
                     @can('zone_access')
@@ -97,6 +97,19 @@
                             </a>
                         </li>
                     @endcan
+                </ul>
+            </li>
+        @endcan
+
+        {{-- hotels management  --}}
+        @can('hotel_management_access')
+            <li
+                class="menu-item {{ request()->is('admin/*/hotels') ? 'active open' : '' }}  {{ request()->is('admin/hotels') ? 'active open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class='menu-icon tf-icons bx bxs-building-house'></i>
+                    <div data-i18n="Dashboards">Hotels management</div>
+                </a>
+                <ul class="menu-sub" style="max-height: 200px; overflow-y: scroll;">
                     @can('hotel_access')
                         <li
                             class="menu-item {{ request()->is('admin/hotels') || request()->is('admin/hotels/*') ? 'active' : '' }}">
@@ -104,6 +117,18 @@
                                 {{ trans('cruds.hotel.title') }}
                             </a>
                         </li>
+                        @php
+                            $zones = \App\Models\Zone::all();
+                        @endphp
+
+                        @foreach ($zones as $zone)
+                            <li
+                            class="menu-item {{ request()->is('admin/'.$zone->name.'/hotels') || request()->is('admin/hotels/*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.hotels.byzone', ['zone' => $zone->name]) }}" class="menu-link">
+                                {{ $zone->name }}
+                            </a>
+                        </li>
+                        @endforeach
                     @endcan
                 </ul>
             </li>

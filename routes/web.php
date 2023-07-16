@@ -1,5 +1,6 @@
 <?php
 
+
 Route::redirect('/', '/login');
 Route::get('/home', function () {
     if (session('status')) {
@@ -32,6 +33,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('sub_zones', 'SubZonesController');
 
     //Hotels
+    Route::get('{zone}/hotels', 'HotelsController@hotelsByZone')->name('hotels.byzone');
     Route::resource('hotels', 'HotelsController');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
