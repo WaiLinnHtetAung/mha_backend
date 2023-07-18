@@ -52,6 +52,7 @@ class ZonesController extends Controller
      */
     public function show(Zone $zone)
     {
+        $zone = $zone->load('sub_zones');
         return view('admin.zones.show', compact('zone'));
     }
 

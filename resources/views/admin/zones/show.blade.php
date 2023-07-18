@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <div class="form-group">
+        <div class="form-group w-75">
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
@@ -26,6 +26,18 @@
                             {{ $zone->name }}
                         </td>
                     </tr>
+                    @foreach ($zone->sub_zones as $sub_zone)
+
+                    <tr>
+                        @if($loop->first)
+                                <th rowspan="0">Sub Zones</th>
+                        @endif
+                        <td>
+                            {{$sub_zone->name}}
+                        </td>
+                    </tr>
+                    @endforeach
+
                 </tbody>
             </table>
             <div class="form-group mt-3">

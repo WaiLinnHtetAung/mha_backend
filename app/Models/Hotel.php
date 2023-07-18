@@ -21,4 +21,8 @@ class Hotel extends Model
     public function zone() {
         return $this->belongsTo(Zone::class, 'zone_id');
     }
+
+    public function setNameAttribute($value) {
+        $this->attributes['name'] = strtoupper($value);
+    }
 }

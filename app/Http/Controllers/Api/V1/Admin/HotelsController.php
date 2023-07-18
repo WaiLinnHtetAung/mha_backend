@@ -15,7 +15,12 @@ class HotelsController extends Controller
      */
     public function index()
     {
+        $hotels = Hotel::paginate(5);
 
+        return response()->json([
+            'status' => true,
+            'hotels' => $hotels
+        ]);
     }
 
     /**

@@ -39,12 +39,6 @@ class UpdateHotelsRequest extends FormRequest
             'phone' => [
                 'required',
             ],
-            'email' => [
-                'required',
-            ],
-            'web_link' => [
-                'required',
-            ],
             'address' => [
                 'required',
             ],

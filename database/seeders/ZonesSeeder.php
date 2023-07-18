@@ -16,28 +16,94 @@ class ZonesSeeder extends Seeder
     public function run()
     {
         $zones = [
-            ['name' => 'Yangon'],
-            ['name' => 'Mandalay'],
-            ['name' => 'NayPyiTaw'],
-            ['name' => 'Bagan'],
-            ['name' => 'Chaung Thar'],
-            ['name' => 'Ngwe Saung'],
-            ['name' => 'Maw La Mying'],
-            ['name' => 'Magway'],
-            ['name' => 'Rakhine'],
-            ['name' => 'Bago'],
-            ['name' => 'Pyay'],
-            ['name' => 'Kachin'],
-            ['name' => 'Kayah'],
-            ['name' => 'Kayin'],
-            ['name' => 'Pyin Oo Lwin'],
-            ['name' => 'Shan (South)'],
-            ['name' => 'Shan (North)'],
-            ['name' => 'TaninTharYi'],
-            ['name' => 'Sa Gaing'],
-            ['name' => 'Chin'],
-            ['name' => 'Golden Triangle'],
-            ['name' => 'Hotel Suppliers'],
+            [
+                'name' => 'Yangon',
+                'slug' => 'Yangon'
+            ],
+            [
+                'name' => 'Mandalay',
+                'slug' => 'Mandalay'
+            ],
+            [
+                'name' => 'NayPyiTaw',
+                'slug' => 'NayPyiTaw'
+            ],
+            [
+                'name' => 'Bagan',
+                'slug' => 'Bagan'
+            ],
+            [
+                'name' => 'Chaung Thar',
+                'slug' => 'ChaungThar'
+            ],
+            [
+                'name' => 'Ngwe Saung',
+                'slug' => 'NgweSaung'
+            ],
+            [
+                'name' => 'Maw La Mying',
+                'slug' => 'MawLaMying'
+            ],
+            [
+                'name' => 'Magway',
+                'slug' => 'Magway'
+            ],
+            [
+                'name' => 'Rakhine',
+                'slug' => 'Rakhine'
+            ],
+            [
+                'name' => 'Bago',
+                'slug' => 'Bago'
+            ],
+            [
+                'name' => 'Pyay',
+                'slug' => 'Pyay'
+            ],
+            [
+                'name' => 'Kachin',
+                'slug' => 'Kachin'
+            ],
+            [
+                'name' => 'Kayah',
+                'slug' => 'Kayah'
+            ],
+            [
+                'name' => 'Kayin',
+                'slug' => 'Kayin'
+            ],
+            [
+                'name' => 'Pyin Oo Lwin',
+                'slug' => 'PyinOoLwin'
+            ],
+            [
+                'name' => 'Shan (South)',
+                'slug' => 'ShanSouth'
+            ],
+            [
+                'name' => 'Shan (North)',
+                'slug' => 'ShanNorth'
+            ],
+            [
+                'name' => 'TaninTharYi',
+                'slug' => 'TaninTharYi'
+            ],
+            [
+                'name' => 'Sa Gaing',
+                'slug' => 'SaGaing'
+            ],
+            [
+                'name' => 'Chin',
+                'slug' => 'Chin'
+            ],
+            [
+                'name' => 'Golden Triangle',
+                'slug' => 'GoldenTriangle'
+            ],
+            [
+                'name' => 'Hotel Suppliers',
+                'slug' => 'HotelSupliers'
+            ],
         ];
 
         Zone::insert($zones);

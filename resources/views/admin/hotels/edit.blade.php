@@ -68,7 +68,7 @@
             <div class="row mb-4">
                 <div class="form-group col-lg-4 col-md-6 col-sm-12">
                     <label for="">{{ trans('cruds.hotel.fields.email') }}</label>
-                    <input type="email" class="form-control" name="email" value="{{old('email', $hotel->email)}}">
+                    <input type="text" class="form-control" name="email" value="{{old('email', $hotel->email)}}">
                     @error('email')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror

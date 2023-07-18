@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('sr_no');
             $table->integer('total_room');
             $table->string('phone');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->longText('address');
             $table->string('web_link')->nullable();
             $table->integer('sub_zone_id')->reference('id')->on('sub_zones')->onDelete('cascade')->nullable();

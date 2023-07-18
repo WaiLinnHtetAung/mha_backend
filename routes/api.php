@@ -7,4 +7,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], function() {
     //zones
     Route::resource('zones', 'ZonesController');
+
+    //hotels
+    Route::resource('hotels', 'HotelsController');
 });

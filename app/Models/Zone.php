@@ -10,10 +10,10 @@ class Zone extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name', 'slug'
     ];
 
-    public function sub_zone() {
+    public function sub_zones() {
         return $this->hasMany(SubZone::class);
     }
 }
