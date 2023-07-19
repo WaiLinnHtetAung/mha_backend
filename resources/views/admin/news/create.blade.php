@@ -70,13 +70,9 @@
             },
             removedfile: function(file) {
                 file.previewElement.remove();
-                let name = ''
-                if(typeof file.file_name !== 'undefined') {
-                    name = file.file_name
-                } else {
-                    name = uploadedImageMap[file.name]
-                }
-                $('form').find('input[name="images[]"] [value=" '+ name + ' "]').remove();
+                file.previewElement.remove();
+                let name = file.file_name || uploadedImageMap[file.name];
+                $('input[name="images[]"][value="' + name + '"]').remove();
             },
             init: function () {
                 @if(isset($project) && $project->document)

@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->longText('address');
             $table->string('web_link')->nullable();
-            $table->integer('sub_zone_id')->reference('id')->on('sub_zones')->onDelete('cascade')->nullable();
-            $table->integer('zone_id')->reference('id')->on('zones')->onDelete('cascade');
+            $table->foreignId('sub_zone_id')->nullable();
+            $table->foreignId('zone_id')->references('id')->on('zones')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

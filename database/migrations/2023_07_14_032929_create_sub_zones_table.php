@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('sub_zones', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('zone_id')->reference('id')->on('zones')->onDelete('cascade');
+            $table->foreignId('zone_id')->references('id')->on('zones')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('news_images', function (Blueprint $table) {
             $table->id();
             $table->string('image');
-            $table->integer('news_id')->reference('id')->on('news')->onDelete('cascade');
+            $table->foreignId('news_id')->references('id')->on('news')->onDelete('cascade');
             $table->timestamps();
         });
     }

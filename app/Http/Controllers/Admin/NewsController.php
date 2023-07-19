@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\StoreNewsRequest;
+use App\Http\Requests\UpdateNewsRequest;
 
 class NewsController extends Controller
 {
@@ -111,9 +112,32 @@ class NewsController extends Controller
      * @param  \App\Models\News  $news
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, News $news)
+    public function update(UpdateNewsRequest $request, News $news)
     {
-        //
+
+        //Deleting Removed Images
+        $removedImages = collect($news->newsImages)->pluck('image')->diff($request->input('images'));
+
+        foreach($removedImages as $removedImage) {
+            File::delete(public_path('storage/images/'.$removedImage));
+            $news->newsImages()->where('image', $removedImage)->delete();
+        }
+
+        //Adding Nes Images
+        foreach($request->input('images') as $image) {
+            if(!$news->newsImages()->where('image', $image)->exists()) {
+                File::move(storage_path('tmp/uploads/'.$image), public_path('storage/images/'.$image));
+
+                NewsImage::create([
+                    'image'     => $image,
+                    'news_id'   => $news->id
+                ]);
+            }
+        }
+
+        $news->update($request->all());
+
+        return redirect()->route('admin.news.index');
     }
 
     /**
@@ -124,6 +148,8 @@ class NewsController extends Controller
      */
     public function destroy(News $news)
     {
-        return 'delete';
+        $news->delete();
+
+        return redirect()->route('admin.news.index');
     }
 }

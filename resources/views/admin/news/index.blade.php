@@ -58,7 +58,12 @@
                                 {!! $news->content ? substr($news->content, 0, 100). '  ...more' : '' !!}
                             </td>
                             <td>
-                                <img style="width: 100%; height: 100px; object-fit: contain;" src="{{ asset('/storage/images/'.$news->newsImages[0]->image) }}" alt="">
+                                @if ($news->newsImages)
+                                    <img style="width: 100%; height: 100px; object-fit: contain;" src="{{ asset('/storage/images/'.$news->newsImages[0]->image) }}" alt="">
+                                @else
+
+                                @endif
+
                             </td>
                             <td>
                                 @can('news_show')

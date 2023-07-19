@@ -7,8 +7,9 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.news.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.news.update", [$news->id]) }}" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <div class="row my-3">
                 <div class="form-group col-lg-8 col-md-8 col-sm-12 mb-3">
                     <label for="">{{ trans('cruds.news.fields.date') }}</label>
@@ -70,36 +71,39 @@
             },
             removedfile: function(file) {
                 file.previewElement.remove();
-                let name = ''
-                if(typeof file.file_name !== 'undefined') {
-                    name = file.file_name
-                } else {
-                    name = uploadedImageMap[file.name]
-                }
-                $('form').find('input[name="images[]"] [value=" '+ name + ' "]').remove();
+                let name = file.file_name || uploadedImageMap[file.name];
+                $('input[name="images[]"][value="' + name + '"]').remove();
             },
             init: function () {
-
                 @if(isset($news) && $news->newsImages)
-                    var files =
-                    {!! json_encode($news->newsImages) !!}
+                    var files = {!! json_encode($news->newsImages) !!}
+                    var server_url = "{{ url('/storage/images/') }}";
+
                     for (var i in files) {
-                        var server_url = "{{url('/storage/images/')}}";
+                    var file = {
+                        name: files[i].image,
+                        size: files[i].size,
+                        accepted: true
+                    };
 
-                        var file = {name: server_url+'/'+files[i].image, size: 2048000, accepted: true, kind: "image" };
-                        this.options.addedfile.call(this, file)
+                    this.files.push(file); // Add the file to Dropzone's files array
+                    this.emit("addedfile", file); // Emit the "addedfile" event
+                    this.emit("thumbnail", file, server_url + '/' + files[i].image); // Emit the "thumbnail" event
+                    this.emit("complete", file); // Emit the "complete" event
 
-                        // this.options.thumbnailWidth = 200;
-                        // this.options.thumbnailHeight = 150;
+                    $('form').append('<input type="hidden" name="images[]" value="'+files[i].image + '">')
+                    uploadedImageMap[file.name] = files[i].image
 
-                        // this.options.thumbnail.call(this, file, serverUrl + '/storage/images/' + files[i].image);
-
-                        file.previewElement.classList.add('dz-complete')
-                        $('form').append('<input type="hidden" name="images[]" value="' + file.file_name + '">')
+                    // Adjust thumbnail image styles to fit within a container
+                    var thumbnailElement = this.files[i].previewElement.querySelector(".dz-image img");
+                    thumbnailElement.style.maxWidth = "100%";
+                    thumbnailElement.style.height = "auto";
                     }
                 @endif
 
-            }
+            },
+
+
         }
 
         ClassicEditor
