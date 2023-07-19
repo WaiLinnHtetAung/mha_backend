@@ -134,6 +134,16 @@
             </li>
         @endcan
 
+        {{-- News management  --}}
+        @can('news_access')
+            <li class="menu-item {{ request()->is('admin') ? 'active' : '' }}">
+                <a href="{{ route('admin.news.index') }}" class="menu-link">
+                    <i class='menu-icon tf-icons bx bxs-news'></i>
+                    <div> {{ trans('cruds.news.title') }}</div>
+                </a>
+            </li>
+        @endcan
+
         {{-- user alert --}}
         @can('user_alert_access')
             <li

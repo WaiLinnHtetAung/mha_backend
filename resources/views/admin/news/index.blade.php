@@ -3,13 +3,13 @@
 
 <div class="card">
     <div class="custom-header">
-        {{ trans('cruds.sub_zone.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.news.title_singular') }} {{ trans('global.list') }}
 
-        @can('sub_zone_create')
+        @can('news_create')
             <div style="margin-bottom: 10px;" class="row">
                 <div class="col-lg-12">
-                    <a class="btn success-btn" href="{{ route('admin.sub_zones.create') }}">
-                        {{ trans('global.add') }} {{ trans('cruds.sub_zone.title_singular') }}
+                    <a class="btn success-btn" href="{{ route('admin.news.create') }}">
+                        {{ trans('global.add') }} {{ trans('cruds.news.title_singular') }}
                     </a>
                 </div>
             </div>
@@ -18,17 +18,23 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-User mb-3">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-User">
                 <thead>
                     <tr>
                         <th>
-                            {{ trans('cruds.sub_zone.fields.id') }}
+                            {{ trans('cruds.news.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.sub_zone.fields.name') }}
+                            {{ trans('cruds.news.fields.date') }}
                         </th>
                         <th>
-                            {{ trans('cruds.sub_zone.fields.zone_name') }}
+                            {{ trans('cruds.news.fields.title') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.news.fields.content') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.news.fields.images') }}
                         </th>
                         <th>
                             &nbsp;
@@ -36,38 +42,44 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($subZones as $key => $sub_zone)
-                        <tr data-entry-id="{{ $sub_zone->id }}">
+                    @foreach($newses as $key => $news)
+                        <tr data-entry-id="{{ $news->id }}">
 
                             <td>
-                                {{ $sub_zone->id }}
+                                {{ $news->id }}
                             </td>
                             <td>
-                                {{ $sub_zone->name ?? '' }}
+                                {{ date('d-m-Y', strtotime($news->date)) }}
                             </td>
                             <td>
-                                {{ $sub_zone->zone->name ?? '' }}
+                                {{ $news->title ?? '' }}
                             </td>
                             <td>
-                                @can('sub_zone_show')
+                                {!! $news->content ? substr($news->content, 0, 100). '  ...more' : '' !!}
+                            </td>
+                            <td>
+                                <img style="width: 100%; height: 100px; object-fit: contain;" src="{{ asset('/storage/images/'.$news->newsImages[0]->image) }}" alt="">
+                            </td>
+                            <td>
+                                @can('news_show')
                                     <a class="p-0 glow"
                                         style="width: 26px;height: 36px;display: inline-block;line-height: 36px;color:grey;"
-                                        href="{{ route('admin.sub_zones.show', $sub_zone->id) }}">
+                                        href="{{ route('admin.news.show', $news->id) }}">
                                         <i class='bx bx-show'></i>
                                     </a>
                                 @endcan
 
-                                @can('sub_zone_edit')
+                                @can('news_edit')
                                     <a class="p-0 glow"
                                         style="width: 26px;height: 36px;display: inline-block;line-height: 36px;color:grey;"
-                                        href="{{ route('admin.sub_zones.edit', $sub_zone->id) }}">
+                                        href="{{ route('admin.news.edit', $news->id) }}">
                                         <i class='bx bx-edit'></i>
                                     </a>
                                 @endcan
 
-                                @can('sub_zone_delete')
-                                    <form id="orderDelete-{{ $sub_zone->id }}"
-                                        action="{{ route('admin.sub_zones.destroy', $sub_zone->id) }}" method="POST"
+                                @can('news_delete')
+                                    <form id="orderDelete-{{ $news->id }}"
+                                        action="{{ route('admin.news.destroy', $news->id) }}" method="POST"
                                         style="display: inline-block;" onsubmit="return showConfirmation()">
                                         @csrf
                                         @method('delete')
@@ -85,9 +97,6 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="float-end">
-                {!! $subZones->links() !!}
-            </div>
         </div>
     </div>
 </div>

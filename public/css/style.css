@@ -70,3 +70,7 @@
     color: #fff;
     font-weight: bold;
 }
+
+.ck-editor__editable {
+    min-height: 200px;
+}

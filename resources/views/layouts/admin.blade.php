@@ -8,6 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <link rel="shortcut icon" href="{{asset('logo.gif')}}" type="image/x-icon">
+
     <title>{{ trans('panel.site_title') }}</title>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
@@ -43,6 +45,8 @@
         href="{{ asset('frestui/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
     <link rel="stylesheet" href="{{ asset('frestui/assets/vendor/libs/flatpickr/flatpickr.css') }}" />
     <link rel="stylesheet" href="{{ asset('frestui/assets/vendor/css/pages/app-invoice.css') }}" />
+
+
     {{-- custom --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @yield('styles')
@@ -652,6 +656,7 @@
     <script src="{{ asset('frestui/assets/js/cards-statistics.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
     <script>
         $(document).ready(function() {
             $("#searchInput").on("keyup", () => {

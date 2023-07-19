@@ -18,7 +18,7 @@ class SubZonesController extends Controller
      */
     public function index()
     {
-        $subZones = SubZone::with('zone')->get();
+        $subZones = SubZone::with('zone')->paginate(15);
 
         return view('admin.subzones.index', compact('subZones'));
     }

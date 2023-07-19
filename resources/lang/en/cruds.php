@@ -100,5 +100,15 @@ return [
             'zone_name'             => 'Zone Name'
         ],
     ],
-
+    'news'  => [
+        'title'             => 'News',
+        'title_singular'    => 'News',
+        'fields'            => [
+            'id'                    => 'ID',
+            'title'                 => 'Title',
+            'content'               => 'Content',
+            'images'                => 'Images',
+            'date'                  => 'Date',
+        ]
+    ]
 ];

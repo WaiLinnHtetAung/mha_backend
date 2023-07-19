@@ -145,7 +145,27 @@ class PermissionsTableSeeder extends Seeder
             [
                 'id'    => 34,
                 'title' => 'zone_management_access'
-            ]
+            ],
+            [
+                'id'    => 35,
+                'title' => 'news_create',
+            ],
+            [
+                'id'    => 36,
+                'title' => 'news_edit',
+            ],
+            [
+                'id'    => 37,
+                'title' => 'news_show',
+            ],
+            [
+                'id'    => 38,
+                'title' => 'news_delete',
+            ],
+            [
+                'id'    => 39,
+                'title' => 'news_access',
+            ],
         ];
 
         Permission::insert($permissions);

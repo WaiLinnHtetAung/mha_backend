@@ -35,6 +35,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //Hotels
     Route::get('{zone}/hotels', 'HotelsController@hotelsByZone')->name('hotels.byzone');
     Route::resource('hotels', 'HotelsController');
+
+    //News
+    Route::post('news/media', 'NewsController@storeMedia')->name('news.storeMedia');
+    Route::resource('news', 'NewsController');
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

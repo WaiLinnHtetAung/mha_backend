@@ -12,4 +12,8 @@ class News extends Model
     protected $fillable = [
         'image', 'date', 'title', 'content'
     ];
+
+    public function newsImages() {
+        return $this->hasMany(NewsImage::class);
+    }
 }
