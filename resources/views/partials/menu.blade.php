@@ -104,7 +104,7 @@
         {{-- hotels management  --}}
         @can('hotel_management_access')
             <li
-                class="menu-item {{ request()->is('admin/*/hotels') ? 'active open' : '' }}  {{ request()->is('admin/hotels') ? 'active open' : '' }}">
+                class="menu-item {{ request()->is('admin/*/hotels') ? 'active open' : '' }}  {{ request()->is('admin/hotels') ? 'active open' : '' }} {{ request()->is('admin/hotels/*') ? 'active open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class='menu-icon tf-icons bx bxs-building-house'></i>
                     <div data-i18n="Dashboards">Hotels management</div>
@@ -112,7 +112,7 @@
                 <ul class="menu-sub" style="max-height: 200px; overflow-y: scroll;">
                     @can('hotel_access')
                         <li
-                            class="menu-item {{ request()->is('admin/hotels') || request()->is('admin/hotels/*') ? 'active' : '' }}">
+                            class="menu-item {{ request()->is('admin/hotels') || (request()->is('admin/hotels/*')) || (request()->is('admin/hotels/create') && request()->query('zone') === 'All') ? 'active' : '' }}">
                             <a href="{{ route('admin.hotels.index') }}" class="menu-link">
                                 {{ trans('cruds.hotel.title') }}
                             </a>
@@ -123,7 +123,7 @@
 
                         @foreach ($zones as $zone)
                             <li
-                            class="menu-item {{ request()->is('admin/'.$zone->name.'/hotels') || request()->is('admin/hotels/*') ? 'active' : '' }}">
+                            class="menu-item {{ request()->is('admin/'.$zone->name.'/hotels') || (request()->is('admin/hotels/create') && request()->query('zone') === $zone->slug) ? 'active' : '' }}">
                             <a href="{{ route('admin.hotels.byzone', ['zone' => $zone->name]) }}" class="menu-link">
                                 {{ $zone->name }}
                             </a>

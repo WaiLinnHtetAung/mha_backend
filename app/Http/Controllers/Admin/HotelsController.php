@@ -22,7 +22,9 @@ class HotelsController extends Controller
     {
         $hotels = Hotel::with('sub_zone', 'zone')->get();
 
-        return view('admin.hotels.index', compact('hotels'));
+        $zoneName = 'All';
+
+        return view('admin.hotels.index', compact('hotels', 'zoneName'));
     }
 
     public function hotelsByZone($zone) {
@@ -40,12 +42,13 @@ class HotelsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $zones = Zone::pluck('name', 'id');
         $sub_zones = SubZone::pluck('name', 'id');
+        $zoneName = $request->zone;
 
-        return view('admin.hotels.create', compact('zones', 'sub_zones'));
+        return view('admin.hotels.create', compact('zones', 'sub_zones', 'zoneName'));
     }
 
     /**
@@ -134,5 +137,52 @@ class HotelsController extends Controller
     public function destroy(Hotel $hotel)
     {
         //
+    }
+
+
+    // ajax route function
+    public function zoneSelect(Request $request) {
+        $zoneName = $request->zoneName;
+        $zones = Zone::all();
+
+        if($zoneName == 'All') {
+            $option = "<option value='' > Choose zone</option>";
+
+            foreach($zones as $zone) {
+                $option .= "<option value= '$zone->id'>$zone->name</option>";
+            }
+
+            return response([
+                'option' => $option
+            ]);
+        } else {
+            $selectedZone = Zone::whereSlug($zoneName)->first();
+
+            $option = "<option value='' > Choose zone</option>";
+
+            foreach($zones as $zone) {
+                $isSelected = $zone->id === $selectedZone->id ? 'selected' : '';
+                $option .= "<option value='$zone->id' $isSelected>$zone->name</option>";
+            }
+
+            return response([
+                'option' => $option
+            ]);
+        }
+    }
+
+    public function subzoneSelect(Request $request) {
+       $zoneName = $request->zoneName;
+       $subzones = Zone::whereSlug($zoneName)->first()->sub_zones;
+
+       $option = "<option value=''>Choose Sub Zone</option>";
+
+       foreach($subzones as $subzone) {
+            $option .= "<option value = '$subzone->id'>$subzone->name</option>";
+       }
+
+        return response([
+            'option' => $option
+        ]);
     }
 }

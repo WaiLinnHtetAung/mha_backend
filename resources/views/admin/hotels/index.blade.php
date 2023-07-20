@@ -6,8 +6,7 @@
         {{-- <span style="color: #eb9c00; font-weight:bold;">{{ isset($zoneName) ? $zoneName.' Hotels' : trans('cruds.hotel.title') }} {{ trans('global.list') }} </span> --}}
         @if(isset($zoneName))
             <div><span style="color: #eb9c00; font-weight:bold; font-size: 17px;">{{$zoneName}}</span> Hotels List</div>
-        @else
-            <div><span style="color: #eb9c00; font-weight:bold; font-size: 17px;">All</span> Hotels List</div>
+
         @endif
 
         <div style="font-weight: bold; color: rgb(21, 94, 190);">Total - {{count($hotels)}}</div>
@@ -15,7 +14,7 @@
         @can('hotel_create')
             <div style="margin-bottom: 10px;" class="row">
                 <div class="col-lg-12">
-                    <a class="btn success-btn" href="{{ route('admin.hotels.create') }}">
+                    <a class="btn success-btn" href="{{ route('admin.hotels.create') }}?zone={{$zoneName}}">
                         {{ trans('global.add') }} {{ trans('cruds.hotel.title_singular') }}
                     </a>
                 </div>

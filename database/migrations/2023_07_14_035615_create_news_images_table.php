@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('image');
             $table->foreignId('news_id')->references('id')->on('news')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

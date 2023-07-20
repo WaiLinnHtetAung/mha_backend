@@ -4,6 +4,7 @@
 <div class="card">
     <div class="card-header">
         {{ trans('global.create') }} {{ trans('cruds.hotel.title_singular') }}
+        ({{$zoneName}} Zone)
     </div>
 
     <div class="card-body">
@@ -75,7 +76,7 @@
                 </div>
                 <div class="form-group col-lg-4 col-md-6 col-sm-12">
                     <label for="">{{ trans('cruds.hotel.fields.sub_zone_name') }}</label>
-                    <select name="sub_zone_id" id="" class="form-control select2">
+                    <select name="sub_zone_id" id="sub_zone_id" class="form-control select2">
                         <option value="">Choose Sub Zone</option>
                         @foreach ($sub_zones as $key=>$value)
                             <option value="{{$key}}">{{$value}}</option>
@@ -90,7 +91,7 @@
             <div class="row mb-4">
                 <div class="form-group col-lg-4 col-md-6 col-sm-12">
                     <label for="">{{ trans('cruds.hotel.fields.zone_name') }}</label>
-                    <select name="zone_id" id="" class="form-control select2">
+                    <select name="zone_id" id="zone_id" class="form-control select2">
                         <option value="">Choose Zone</option>
                         @foreach ($zones as $key=>$value)
                             <option value="{{$key}}" {{$key == old('zone_id') ? 'selected' : ''}}>{{$value}}</option>
@@ -119,5 +120,44 @@
 </div>
 
 
+
+@endsection
+
+@section('scripts')
+
+<script>
+    $('document').ready(function() {
+        let zoneName = {!! json_encode($zoneName) !!};
+
+        // for auto select zone select base on zonename
+        $.ajax({
+            type: 'POST',
+            url : "{{ route('admin.zone.select') }}",
+            data: {
+                zoneName: zoneName,
+                _token: "{{csrf_token()}}",
+            },
+            success: function(response) {
+                $('#zone_id').html(response.option)
+            }
+        })
+
+
+        // for auto select sub_zone based on zonename
+        if(zoneName !== 'All') {
+            $.ajax({
+                type: 'POST',
+                url: "{{route('admin.subzone.select')}}",
+                data: {
+                    zoneName: zoneName,
+                    _token: "{{csrf_token()}}",
+                },
+                success: function(response) {
+                    $('#sub_zone_id').html(response.option);
+                }
+            })
+        }
+    })
+</script>
 
 @endsection
