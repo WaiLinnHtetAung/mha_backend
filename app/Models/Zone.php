@@ -17,4 +17,8 @@ class Zone extends Model
     public function sub_zones() {
         return $this->hasMany(SubZone::class);
     }
+
+    public function hotels() {
+        return $this->hasMany(Hotel::class);
+    }
 }
