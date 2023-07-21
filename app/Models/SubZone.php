@@ -18,4 +18,8 @@ class SubZone extends Model
     public function zone() {
         return $this->belongsTo(Zone::class, 'zone_id');
     }
+
+    public function hotels() {
+        return $this->hasMany(Hotel::class);
+    }
 }

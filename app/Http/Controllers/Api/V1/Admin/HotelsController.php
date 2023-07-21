@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Models\Zone;
 use App\Models\Hotel;
+use App\Models\SubZone;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -17,11 +18,15 @@ class HotelsController extends Controller
     public function index(Request $request)
     {
         $zoneName = $request->zoneName;
+        $zoneId = Zone::whereName($zoneName)->first()->id;
         $hotels = Zone::whereName($zoneName)->first()->hotels()->paginate(60);
+        $subzones = Zone::whereName($zoneName)->first()->sub_zones;
 
         return response()->json([
             'status' => true,
-            'hotels' => $hotels
+            'hotels' => $hotels,
+            'subzones' => $subzones,
+            'zoneId'   => $zoneId
         ]);
     }
 
@@ -89,5 +94,32 @@ class HotelsController extends Controller
     public function destroy(Hotel $hotel)
     {
         //
+    }
+
+    //hotelsBySubzone
+    public function hotelsBySubzone(Request $request) {
+        $subzoneId = $request->subzoneId;
+
+        if(substr($subzoneId, 0,8) == 'zonename') {
+
+            $zoneName = substr($subzoneId, 8);
+            $hotels = Zone::whereName($zoneName)->first()->hotels()->paginate(60);
+
+            return response()->json([
+                'status' => true,
+                'hotels' => $hotels
+            ]);
+
+        } else {
+            $hotels = SubZone::findOrFail($subzoneId)->hotels()->paginate(60);
+
+            logger($hotels);
+
+            return response()->json([
+                'status' => true,
+                'hotels' => $hotels
+            ]);
+        }
+
     }
 }
