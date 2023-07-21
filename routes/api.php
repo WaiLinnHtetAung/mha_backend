@@ -11,4 +11,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     //hotels
     Route::get('/hotelsBySubzone', 'HotelsController@hotelsBySubzone');
     Route::resource('hotels', 'HotelsController');
+
+    //News
+    Route::resource('news', 'NewsController');
 });

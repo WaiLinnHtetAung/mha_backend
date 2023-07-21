@@ -19,7 +19,7 @@ class HotelsController extends Controller
     {
         $zoneName = $request->zoneName;
         $zoneId = Zone::whereName($zoneName)->first()->id;
-        $hotels = Zone::whereName($zoneName)->first()->hotels()->paginate(60);
+        $hotels = Zone::whereName($zoneName)->first()->hotels()->paginate(32);
         $subzones = Zone::whereName($zoneName)->first()->sub_zones;
 
         return response()->json([
@@ -99,6 +99,7 @@ class HotelsController extends Controller
     //hotelsBySubzone
     public function hotelsBySubzone(Request $request) {
         $subzoneId = $request->subzoneId;
+        logger($subzoneId);
 
         if(substr($subzoneId, 0,8) == 'zonename') {
 
@@ -113,7 +114,6 @@ class HotelsController extends Controller
         } else {
             $hotels = SubZone::findOrFail($subzoneId)->hotels()->paginate(60);
 
-            logger($hotels);
 
             return response()->json([
                 'status' => true,
