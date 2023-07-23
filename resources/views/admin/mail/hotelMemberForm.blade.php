@@ -107,7 +107,7 @@
                 </div>
 
                 <div class="photo">
-                    <img src="{{public_path('/storage/images/mha.png')}}" alt="">
+                    <img src="{{asset('storage/images/mha.png')}}" alt="">
                 </div>
             </div>
             <div class="owner-info">
@@ -115,11 +115,11 @@
                 <div class="data">
                     <div class="grid-container">
                         <div class="" style="width: 120px; margin-right:10px;">Name of Hotel</div>
-                        <div class="" style="width: 250px; text-align:justify; border-bottom:1px dotted #000;">{{$data['hotel_name']}}</div>
+                        <div class="" style="width: 250px; text-align:justify; border-bottom:1px dotted #000;">{{$data['owner_phone']}}</div>
                     </div>
                     <div class="grid-container">
                         <div class="" style="width: 120px; margin-right:10px;">No.of rooms</div>
-                        <div class="" style="width: 250px; text-align:justify; border-bottom:1px dotted #000;">{{$data['no_of_room']}}</div>
+                        <div class="" style="width: 250px; text-align:justify; border-bottom:1px dotted #000;">{{$data['owner_phone']}}</div>
                     </div>
                     <div class="grid-container">
                         <div class="" style="width: 120px; margin-right:10px;">Structure</div>
@@ -127,19 +127,19 @@
                     </div>
                     <div class="grid-container">
                         <div class="" style="width: 120px; margin-right:10px;">No.of employee</div>
-                        <div class="" style="width: 250px; text-align:justify; border-bottom:1px dotted #000;">{{$data['no_of_employee']}}</div>
+                        <div class="" style="width: 250px; text-align:justify; border-bottom:1px dotted #000;">{{$data['owner_phone']}}</div>
                     </div>
                     <div class="grid-container">
                         <div class="" style="width: 120px; margin-right:10px;">Address</div>
-                        <div class="" style="width: 250px; text-align:justify; border-bottom:1px dotted #000;">{{$data['hotel_address']}}</div>
+                        <div class="" style="width: 250px; text-align:justify; border-bottom:1px dotted #000;">{{$data['owner_phone']}}</div>
                     </div>
                     <div class="grid-container">
                         <div class="" style="width: 120px; margin-right:10px;">Zone</div>
-                        <div class="" style="width: 250px; text-align:justify; border-bottom:1px dotted #000;">{{$data['zone']}}</div>
+                        <div class="" style="width: 250px; text-align:justify; border-bottom:1px dotted #000;">{{$data['owner_phone']}}</div>
                     </div>
                     <div class="grid-container">
                         <div class="" style="width: 120px; margin-right:10px;">Phone/Fax/Email</div>
-                        <div class="" style="width: 250px; text-align:justify; border-bottom:1px dotted #000;">{{$data['hotel_phone']}}</div>
+                        <div class="" style="width: 250px; text-align:justify; border-bottom:1px dotted #000;">{{$data['owner_phone']}}</div>
                     </div>
                 </div>
 
