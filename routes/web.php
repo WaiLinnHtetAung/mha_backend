@@ -42,6 +42,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('news/media', 'NewsController@storeMedia')->name('news.storeMedia');
     Route::resource('news', 'NewsController');
 
+    Route::get('/email', function() {
+        $data = [
+            'owner' => 'U Mg Mg',
+            'nrc_no' => '8/MaKaNa(N)23343',
+            'address' => "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium, cupiditate dolor vel unde fuga consequuntur. Nam temporibus iusto earum quidem.",
+            'owner_phone'  => '094343434873',
+            'member_type' => 'B'
+        ];
+        return view('admin.mail.hotelMemberForm', compact('data'));
+    });
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

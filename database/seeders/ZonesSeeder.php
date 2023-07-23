@@ -102,7 +102,7 @@ class ZonesSeeder extends Seeder
             ],
             [
                 'name' => 'Hotel Suppliers',
-                'slug' => 'HotelSupliers'
+                'slug' => 'HotelSuppliers'
             ],
         ];
 

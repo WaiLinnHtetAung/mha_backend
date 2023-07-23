@@ -14,4 +14,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
 
     //News
     Route::resource('news', 'NewsController');
+
+    //Hotel Member Form
+    Route::post('/createHotelMemberForm', 'MemberFormController@hotelMemberForm');
 });
