@@ -107,7 +107,7 @@
                 </div>
 
                 <div class="photo">
-                    <img src="{{asset('storage/images/mha.png')}}" alt="">
+                    <img src="{{$data['owner_image']}}" alt="">
                 </div>
             </div>
             <div class="owner-info">
