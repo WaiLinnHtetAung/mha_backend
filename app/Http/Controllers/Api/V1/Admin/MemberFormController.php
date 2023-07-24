@@ -50,7 +50,7 @@ class MemberFormController extends Controller
         ];
 
 
-        Mail::to('hotelier.financedept@gmail.com')->send(new HotelMemberForm($mailData));
+        Mail::to('webservices@itgatewaymm.com')->send(new HotelMemberForm($mailData));
 
         return response()->json(['message' => 'Form is submitted successfully']);
     }

@@ -17,10 +17,10 @@ class HotelsController extends Controller
      */
     public function index(Request $request)
     {
-        $zoneName = $request->zoneName;
-        $zoneId = Zone::whereName($zoneName)->first()->id;
-        $hotels = Zone::whereName($zoneName)->first()->hotels()->paginate(32);
-        $subzones = Zone::whereName($zoneName)->first()->sub_zones;
+        $zoneNameSlug = $request->zoneName;
+        $zoneId = Zone::whereSlug($zoneNameSlug)->first()->id;
+        $hotels = Zone::findOrFail($zoneId)->hotels()->paginate(32);
+        $subzones = Zone::whereSlug($zoneNameSlug)->first()->sub_zones;
 
         return response()->json([
             'status' => true,
