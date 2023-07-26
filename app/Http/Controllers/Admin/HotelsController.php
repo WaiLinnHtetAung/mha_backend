@@ -156,7 +156,7 @@ class HotelsController extends Controller
                 'option' => $option
             ]);
         } else {
-            $selectedZone = Zone::whereSlug($zoneName)->first();
+            $selectedZone = Zone::whereName($zoneName)->first();
 
             $option = "<option value='' > Choose zone</option>";
 
@@ -173,7 +173,7 @@ class HotelsController extends Controller
 
     public function subzoneSelect(Request $request) {
        $zoneName = $request->zoneName;
-       $subzones = Zone::whereSlug($zoneName)->first()->sub_zones;
+       $subzones = Zone::whereName($zoneName)->first()->sub_zones;
 
        $option = "<option value=''>Choose Sub Zone</option>";
 

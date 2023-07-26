@@ -88,7 +88,7 @@
                             {{trans('cruds.hotel.fields.sub_zone_name')}}
                         </th>
                         <td>
-                            {{$hotel->sub_zone->name}}
+                            {{$hotel->sub_zone ? $hotel->sub_zone->name : ''}}
                         </td>
                     </tr>
                     <tr>
