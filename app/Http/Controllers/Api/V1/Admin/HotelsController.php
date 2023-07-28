@@ -99,12 +99,11 @@ class HotelsController extends Controller
     //hotelsBySubzone
     public function hotelsBySubzone(Request $request) {
         $subzoneId = $request->subzoneId;
-        logger($subzoneId);
 
         if(substr($subzoneId, 0,8) == 'zonename') {
 
             $zoneName = substr($subzoneId, 8);
-            $hotels = Zone::whereName($zoneName)->first()->hotels()->paginate(60);
+            $hotels = Zone::whereName($zoneName)->first()->hotels()->paginate(32);
 
             return response()->json([
                 'status' => true,
@@ -112,7 +111,7 @@ class HotelsController extends Controller
             ]);
 
         } else {
-            $hotels = SubZone::findOrFail($subzoneId)->hotels()->paginate(60);
+            $hotels = SubZone::findOrFail($subzoneId)->hotels()->paginate(32);
 
 
             return response()->json([
@@ -121,5 +120,22 @@ class HotelsController extends Controller
             ]);
         }
 
+    }
+
+    //search Hotels
+    public function searchHotels(Request $request) {
+        $query = $request->search;
+
+        if(isset($query)) {
+            $hotels = Hotel::where('name', 'like', "%$query%")->get();
+        } else {
+            $hotels = [];
+        }
+
+
+        return response()->json([
+            'status' => true,
+            'hotels' => $hotels,
+        ]);
     }
 }

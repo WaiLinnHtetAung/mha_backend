@@ -10,6 +10,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
 
     //hotels
     Route::get('/hotelsBySubzone', 'HotelsController@hotelsBySubzone');
+    Route::get('/searchHotels', 'HotelsController@searchHotels');
     Route::resource('hotels', 'HotelsController');
 
     //News
