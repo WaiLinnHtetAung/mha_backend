@@ -25,7 +25,10 @@ class NewsController extends Controller
                 'news' => $news
             ]);
         } else {
-            $monthNumber = date('n', strtotime($month));
+            date_default_timezone_set('Asia/Yangon');
+            $timestamp = strtotime('1 '.$month.' 2023');
+            $monthNumber = date('n', $timestamp);
+
             $news = News::with('newsImages')->whereRaw('MONTH(date) = ?', [$monthNumber])->get();
 
             return response()->json([
