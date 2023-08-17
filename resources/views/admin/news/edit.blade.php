@@ -59,7 +59,7 @@
         let uploadedImageMap = {}
         Dropzone.options.imageDropzone ={
             url: "{{ route('admin.news.storeMedia') }}",
-            maxFilesize: 2,
+            maxFilesize: 10,
             addRemoveLinks: true,
             headers: {
                 'X-CSRF-TOKEN': "{{csrf_token()}}"

@@ -20,7 +20,7 @@ class HotelsController extends Controller
      */
     public function index()
     {
-        $hotels = Hotel::with('sub_zone', 'zone')->get();
+        $hotels = Hotel::with('sub_zone', 'zone')->orderBy('created_at', 'desc')->get();
 
         $zoneName = 'All';
 
@@ -32,7 +32,7 @@ class HotelsController extends Controller
 
         $zone_id = Zone::firstWhere('name', $zoneName)->id;
 
-        $hotels = Hotel::where('zone_id', $zone_id)->get();
+        $hotels = Hotel::where('zone_id', $zone_id)->orderBy('created_at', 'desc')->get();
 
         return view('admin.hotels.index', compact('hotels', 'zoneName'));
     }
