@@ -61,6 +61,13 @@ class NewsController extends Controller
         ]);
     }
 
+    public function deleteMedia(Request $request) {
+        $file = $request->file_name;
+        File::delete(storage_path('tmp/uploads/'.$file));
+
+        return 'success';
+    }
+
     public function store(StoreNewsRequest $request)
     {
         $news = News::create($request->all());
@@ -148,6 +155,11 @@ class NewsController extends Controller
      */
     public function destroy(News $news)
     {
+        // ----if you want to delete permently, open below code-----
+
+        // foreach($news->newsImages as $img) {
+        //     File::delete(public_path('storage/images/'.$img->image));
+        // }
         $news->delete();
 
         return redirect()->route('admin.news.index');

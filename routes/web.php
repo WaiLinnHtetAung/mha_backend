@@ -40,6 +40,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //News
     Route::post('news/media', 'NewsController@storeMedia')->name('news.storeMedia');
+    Route::post('news/delmedia', 'NewsController@deleteMedia')->name('news.deleteMedia');
     Route::resource('news', 'NewsController');
 
     Route::get('/email', function() {

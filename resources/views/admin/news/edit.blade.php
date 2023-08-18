@@ -73,6 +73,20 @@
                 file.previewElement.remove();
                 let name = file.file_name || uploadedImageMap[file.name];
                 $('input[name="images[]"][value="' + name + '"]').remove();
+                $.ajax({
+                    url: "{{ route('admin.news.deleteMedia') }}", // Change this to the appropriate delete route
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        file_name: name
+                    },
+                    success: function(response) {
+                        console.log("File deleted successfully:", response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error deleting file:", error);
+                    }
+                });
             },
             init: function () {
                 @if(isset($news) && $news->newsImages)
