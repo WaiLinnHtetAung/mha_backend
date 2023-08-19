@@ -73,6 +73,7 @@ class HotelsController extends Controller
         return redirect()->route('admin.hotels.byzone', ['zone' => $zoneName]);
     }
 
+
     /**
      * Display the specified resource.
      *
