@@ -31,14 +31,18 @@ class MemberFormController extends Controller
         $hotel_address = $formData['hotel_address'];
         $member_type = $formData['member_type'];
 
-        $imageName = $request->file('owner_image')->getClientOriginalName();
-        $request->file('owner_image')->storeAs('public/images', $imageName);
+        if($request->file('owner_image')) {
+            $imageName = $request->file('owner_image')->getClientOriginalName();
+            $request->file('owner_image')->storeAs('public/images', $imageName);
+        } else {
+            $imageName = null;
+        }
 
         $mailData = [
             'owner' => $owner,
             'nrc_no' => $nrc_no,
             'owner_phone' => $owner_phone,
-            'owner_image' => url('storage/images/'.$imageName),
+            'owner_image' => $imageName ? url('storage/images/'.$imageName) : '',
             'address' => $address,
             'hotel_name' => $hotel_name,
             'no_of_room' => $no_of_room,
@@ -50,7 +54,7 @@ class MemberFormController extends Controller
         ];
 
 
-        Mail::to('webservices@itgatewaymm.com')->send(new HotelMemberForm($mailData));
+        Mail::to('it.myanmarhotelier@gmail.com')->send(new HotelMemberForm($mailData));
 
         return response()->json(['message' => 'Form is submitted successfully']);
     }

@@ -107,7 +107,9 @@
                 </div>
 
                 <div class="photo">
-                    <img src="{{$data['owner_image']}}" alt="">
+                    @if($data['owner_image'])
+                        <img src="{{$data['owner_image']}}" alt="">
+                    @endif
                 </div>
             </div>
             <div class="owner-info">
