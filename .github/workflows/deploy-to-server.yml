@@ -1,0 +1,25 @@
+name: MHA CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Deploy-To-Server:
+   runs-on: ubuntu-latest
+
+   steps:
+      - name: Checkout the files
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: composer install --no-progress --no-suggest --prefer-dist
+
+      - name: Deploy to server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          REMOTE_HOST: ${{secrets.HOST}}
+          REMOTE_USER: ${{secrets.USERNAME}}
+          TARGET: ${{secrets.TARGET_DIR}}
