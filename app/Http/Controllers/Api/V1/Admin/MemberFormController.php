@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Mail\HotelMemberForm;
 use Illuminate\Http\Request;
+use App\Mail\HotelMemberForm;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 
 class MemberFormController extends Controller
@@ -15,8 +15,8 @@ class MemberFormController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function hotelMemberForm(Request $request)
-    {
+
+    public function hotelMemberForm(Request $request) {
         $formData = $request->all();
 
         $owner = $formData['owner'];
@@ -31,7 +31,7 @@ class MemberFormController extends Controller
         $hotel_address = $formData['hotel_address'];
         $member_type = $formData['member_type'];
 
-        if ($request->file('owner_image')) {
+        if($request->file('owner_image')) {
             $imageName = $request->file('owner_image')->getClientOriginalName();
             $request->file('owner_image')->storeAs('public/images', $imageName);
         } else {
@@ -42,7 +42,7 @@ class MemberFormController extends Controller
             'owner' => $owner,
             'nrc_no' => $nrc_no,
             'owner_phone' => $owner_phone,
-            'owner_image' => $imageName ? url('storage/images/' . $imageName) : '',
+            'owner_image' => $imageName ? url('storage/images/'.$imageName) : '',
             'address' => $address,
             'hotel_name' => $hotel_name,
             'no_of_room' => $no_of_room,
@@ -53,7 +53,8 @@ class MemberFormController extends Controller
             'member_type' => $member_type,
         ];
 
-        Mail::to('webservices@itgatewaymm.com')->send(new HotelMemberForm($mailData));
+
+        Mail::to('it.myanmarhotelier@gmail.com')->send(new HotelMemberForm($mailData));
 
         return response()->json(['message' => 'Form is submitted successfully']);
     }
