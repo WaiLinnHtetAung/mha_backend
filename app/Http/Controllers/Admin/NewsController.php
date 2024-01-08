@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreNewsRequest;
+use App\Http\Requests\UpdateNewsRequest;
 use App\Models\News;
 use App\Models\NewsImage;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-use App\Http\Requests\StoreNewsRequest;
-use App\Http\Requests\UpdateNewsRequest;
 
 class NewsController extends Controller
 {
@@ -20,7 +20,6 @@ class NewsController extends Controller
     public function index()
     {
         $newses = News::with('newsImages')->get();
-
         return view('admin.news.index', compact('newses'));
     }
 
@@ -56,14 +55,15 @@ class NewsController extends Controller
         $file->move($path, $name);
 
         return response()->json([
-            'name'          => $name,
+            'name' => $name,
             'original_name' => $file->getClientOriginalName(),
         ]);
     }
 
-    public function deleteMedia(Request $request) {
+    public function deleteMedia(Request $request)
+    {
         $file = $request->file_name;
-        File::delete(storage_path('tmp/uploads/'.$file));
+        File::delete(storage_path('tmp/uploads/' . $file));
 
         return 'success';
     }
@@ -72,13 +72,13 @@ class NewsController extends Controller
     {
         $news = News::create($request->all());
 
-        foreach($request->input('images') as $image) {
-            File::move(storage_path('tmp/uploads/'.$image), public_path('storage/images/'.$image));
-            File::delete(storage_path('tmp/uploads/'.$image));
+        foreach ($request->input('images') as $image) {
+            File::move(storage_path('tmp/uploads/' . $image), public_path('storage/images/' . $image));
+            File::delete(storage_path('tmp/uploads/' . $image));
 
             NewsImage::create([
-                'image'     => $image,
-                'news_id'   => $news->id,
+                'image' => $image,
+                'news_id' => $news->id,
             ]);
         }
 
@@ -125,19 +125,19 @@ class NewsController extends Controller
         //Deleting Removed Images
         $removedImages = collect($news->newsImages)->pluck('image')->diff($request->input('images'));
 
-        foreach($removedImages as $removedImage) {
-            File::delete(public_path('storage/images/'.$removedImage));
+        foreach ($removedImages as $removedImage) {
+            File::delete(public_path('storage/images/' . $removedImage));
             $news->newsImages()->where('image', $removedImage)->delete();
         }
 
         //Adding Nes Images
-        foreach($request->input('images') as $image) {
-            if(!$news->newsImages()->where('image', $image)->exists()) {
-                File::move(storage_path('tmp/uploads/'.$image), public_path('storage/images/'.$image));
+        foreach ($request->input('images') as $image) {
+            if (!$news->newsImages()->where('image', $image)->exists()) {
+                File::move(storage_path('tmp/uploads/' . $image), public_path('storage/images/' . $image));
 
                 NewsImage::create([
-                    'image'     => $image,
-                    'news_id'   => $news->id
+                    'image' => $image,
+                    'news_id' => $news->id,
                 ]);
             }
         }

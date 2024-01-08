@@ -26,7 +26,7 @@ class HotelsController extends Controller
             'status' => true,
             'hotels' => $hotels,
             'subzones' => $subzones,
-            'zoneId'   => $zoneId
+            'zoneId' => $zoneId
         ]);
     }
 
@@ -97,13 +97,15 @@ class HotelsController extends Controller
     }
 
     //hotelsBySubzone
-    public function hotelsBySubzone(Request $request) {
+    public function hotelsBySubzone(Request $request)
+    {
         $subzoneId = $request->subzoneId;
+        logger($request->subzoneId);
 
-        if(substr($subzoneId, 0,8) == 'zonename') {
+        if (substr($subzoneId, 0, 8) == 'zonename') {
 
             $zoneName = substr($subzoneId, 8);
-            $hotels = Zone::whereName($zoneName)->first()->hotels()->paginate(32);
+            $hotels = Zone::whereSlug($zoneName)->first()->hotels()->paginate(32);
 
             return response()->json([
                 'status' => true,
@@ -111,7 +113,7 @@ class HotelsController extends Controller
             ]);
 
         } else {
-            $hotels = SubZone::findOrFail($subzoneId)->hotels()->paginate(32);
+            $hotels = SubZone::findOrFail($subzoneId)->hotels()->orderBy('created_at', 'desc')->paginate(32);
 
 
             return response()->json([
@@ -123,10 +125,11 @@ class HotelsController extends Controller
     }
 
     //search Hotels
-    public function searchHotels(Request $request) {
+    public function searchHotels(Request $request)
+    {
         $query = $request->search;
 
-        if(isset($query)) {
+        if (isset($query)) {
             $hotels = Hotel::where('name', 'like', "%$query%")->get();
         } else {
             $hotels = [];
