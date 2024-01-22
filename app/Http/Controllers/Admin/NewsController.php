@@ -74,7 +74,7 @@ class NewsController extends Controller
         foreach ($request->input('images') as $image) {
             $file_source = storage_path('tmp/uploads/' . $image);
             $file_destination = public_path('storage/images/' . $image);
-            if (File::exists($file_source) && File::exists($file_destination)) {
+            if (File::exists($file_source)) {
                 File::move($file_source, $file_destination);
                 File::delete($file_source);
 
