@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreNewsRequest;
+use App\Http\Requests\UpdateNewsRequest;
 use App\Models\News;
 use App\Models\NewsImage;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-use App\Http\Requests\StoreNewsRequest;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\UpdateNewsRequest;
 
 class NewsController extends Controller
 {
@@ -77,7 +76,7 @@ class NewsController extends Controller
             $file_source = storage_path('tmp/uploads/' . $image);
             $file_destination = public_path('storage/images/' . $image);
             if (File::exists($file_source)) {
-                Storage::move($file_source, $file_destination);
+                File::move($file_source, $file_destination);
                 File::delete($file_source);
 
                 NewsImage::create([
