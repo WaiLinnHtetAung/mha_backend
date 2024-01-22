@@ -73,13 +73,17 @@ class NewsController extends Controller
         $news = News::create($request->all());
 
         foreach ($request->input('images') as $image) {
-            File::move(storage_path('tmp/uploads/' . $image), public_path('storage/images/' . $image));
-            File::delete(storage_path('tmp/uploads/' . $image));
+            $file_source = storage_path('tmp/uploads/' . $image);
+            $file_destination = public_path('storage/images/' . $image);
+            if ($file_source) {
+                File::move($file_source, $file_destination);
+                File::delete($file_source);
 
-            NewsImage::create([
-                'image' => $image,
-                'news_id' => $news->id,
-            ]);
+                NewsImage::create([
+                    'image' => $image,
+                    'news_id' => $news->id,
+                ]);
+            }
         }
 
         return redirect()->route('admin.news.index');
