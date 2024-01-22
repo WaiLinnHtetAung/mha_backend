@@ -75,7 +75,7 @@ class NewsController extends Controller
             $file_source = storage_path('tmp/uploads/' . $image);
             $file_destination = public_path('storage/images/' . $image);
             if (File::exists($file_source)) {
-                dd($file_source);
+                dd($file_destination);
                 File::move($file_source, $file_destination);
                 File::delete($file_source);
 
