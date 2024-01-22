@@ -71,10 +71,10 @@ class NewsController extends Controller
     public function store(StoreNewsRequest $request)
     {
         $news = News::create($request->all());
-
+        // return storage_path('app/public/images');
         foreach ($request->input('images') as $image) {
             $file_source = storage_path('tmp/uploads/' . $image);
-            $file_destination = public_path('storage/images/' . $image);
+            $file_destination = storage_path('app/public/images/' . $image);
             if (File::exists($file_source)) {
                 File::move($file_source, $file_destination);
                 File::delete($file_source);
